@@ -13,9 +13,15 @@ class ToDoItViewController: UITableViewController{
     // create new item array
     
     var itemArray = ["Design Tutorial App", "Put App on App Store", "Sell App", "Make Dat Money"]
+    
+    let defaults = UserDefaults.standard
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if let items = defaults.array(forKey: "ToDoListArray") as? [String] {
+            itemArray = items
+        }
         
     }
     
@@ -66,6 +72,8 @@ class ToDoItViewController: UITableViewController{
             // print(textField.text)  prints success to debug console
             
             self.itemArray.append(textField.text!)
+            
+            self.defaults.set(self.itemArray, forKey: "ToDoListArray")
             
             self.tableView.reloadData()
             
